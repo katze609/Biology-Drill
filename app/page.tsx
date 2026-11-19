@@ -14,6 +14,14 @@ type DraftQuestion = {
   reviewer: string;
 };
 
+type StudyReference = {
+  title: string;
+  location: string;
+  why: string;
+  url?: string;
+  note?: string;
+};
+
 const sampleQuestion = {
   topic: "Cellular respiration",
   level: "AP Biology · Application",
@@ -28,6 +36,21 @@ const sampleQuestion = {
   explanation:
     "ATP synthase uses the proton electrochemical gradient across the inner mitochondrial membrane to drive phosphorylation of ADP. If protons can cross the membrane without passing through ATP synthase, the gradient dissipates and ATP production by oxidative phosphorylation falls. Electron transport may continue for a time, but it no longer efficiently couples to ATP synthesis.",
 };
+
+const studyReferences: StudyReference[] = [
+  {
+    title: "Campbell Biology",
+    location: "Chapter 9, Cellular Respiration and Fermentation — focus on oxidative phosphorylation, chemiosmosis, and the proton gradient.",
+    why: "Use the chapter’s diagrams to connect proton movement across the inner membrane with ATP production.",
+    note: "Chapter numbering and section titles can vary by edition; check the table of contents in your copy.",
+  },
+  {
+    title: "OpenStax Biology 2e (free online textbook)",
+    location: "Section 7.4: Oxidative Phosphorylation",
+    why: "A free, focused review of the electron transport chain, chemiosmosis, and ATP synthase.",
+    url: "https://openstax.org/books/biology-2e/pages/7-4-oxidative-phosphorylation",
+  },
+];
 
 export default function Home() {
   const [view, setView] = useState<"practice" | "drafts">("practice");
@@ -116,7 +139,25 @@ export default function Home() {
                   return <button key={choice} onClick={() => selectAnswer(index)} disabled={selected !== null} className={`answer-option${stateClass}`}><span className="answer-letter">{String.fromCharCode(65 + index)}</span><span>{choice}</span>{selected !== null && isCorrect && <span className="answer-check">✓</span>}{isSelected && !isCorrect && <span className="answer-check">×</span>}</button>;
                 })}
               </div>
-              {selected !== null && <div className={`feedback ${selected === sampleQuestion.answer ? "feedback-good" : "feedback-retry"}`}><strong>{selected === sampleQuestion.answer ? "That's right." : "Not quite—here's the key idea."}</strong><p>{sampleQuestion.explanation}</p><button className="text-button" onClick={() => setRevealed(!revealed)}>{revealed ? "Hide reasoning" : "Explore the reasoning"} <span>↗</span></button>{revealed && <div className="reasoning-note">Think of the proton gradient as stored potential energy. Uncoupling lets that energy dissipate without powering ATP synthase.</div>}</div>}
+              {selected !== null && <>
+                <div className={`feedback ${selected === sampleQuestion.answer ? "feedback-good" : "feedback-retry"}`}>
+                  <strong>{selected === sampleQuestion.answer ? "That's right." : "Not quite—here's the key idea."}</strong>
+                  <p>{sampleQuestion.explanation}</p>
+                  <button className="text-button" onClick={() => setRevealed(!revealed)}>{revealed ? "Hide reasoning" : "Explore the reasoning"} <span>↗</span></button>
+                  {revealed && <div className="reasoning-note">Think of the proton gradient as stored potential energy. Uncoupling lets that energy dissipate without powering ATP synthase.</div>}
+                </div>
+                <section className="reference-panel" aria-labelledby="reference-heading">
+                  <div className="reference-heading-row"><div><span className="reference-kicker">KEEP LEARNING</span><h3 id="reference-heading">Study this in your textbook</h3></div><span className="reference-icon">↗</span></div>
+                  <p className="reference-intro">Suggested reading for the concept in this question. Page numbers vary by edition.</p>
+                  <div className="reference-list">
+                    {studyReferences.map((reference) => <article className="reference-item" key={reference.title}>
+                      <div className="reference-book-icon">▤</div>
+                      <div className="reference-copy"><strong>{reference.title}</strong><p className="reference-location">{reference.location}</p><p>{reference.why}</p>{reference.note && <small>{reference.note}</small>}{reference.url && <a href={reference.url} target="_blank" rel="noreferrer">Read this section online <span>↗</span></a>}</div>
+                    </article>)}
+                  </div>
+                  <p className="reference-disclaimer">Reading suggestions identify relevant sections; they are not endorsements by the authors or publishers.</p>
+                </section>
+              </>}
               <div className="card-footer"><span>Designed to test <strong>cause &amp; effect</strong></span><button className="next-button" onClick={() => { setSelected(null); setRevealed(false); }}>Next question <span>→</span></button></div>
             </article>
             <div className="bottom-hint"><span>✦</span> Explanations focus on the biological reasoning behind each answer.</div>

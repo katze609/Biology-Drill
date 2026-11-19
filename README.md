@@ -16,9 +16,14 @@ Open http://localhost:3000. The practice screen works without an API key; AI dra
 ## MVP scope
 
 - Practice a sample biology question, reveal a worked explanation, and track a simple session score.
+- After answering, see curated suggested reading references for the concept, including the relevant Campbell Biology chapter/subjects and a free OpenStax Biology 2e section.
 - Draft an original question with the OpenAI Chat Completions API.
 - Keep generated content in an unreviewed draft state with source notes and reviewer fields to complete.
 - Drafts currently live only in browser memory and disappear on refresh. No authentication or database is included yet.
+
+## Study references
+
+Reading suggestions are curated for the sample practice question. Campbell Biology chapter numbers and headings can vary by edition, so learners should confirm the location in their own copy. Reference suggestions are not endorsements by textbook authors or publishers. Before expanding the reference catalog, verify every book title, edition, chapter/section, and link; do not generate bibliographic references with AI and display them as verified.
 
 ## Content and safety notes
 
