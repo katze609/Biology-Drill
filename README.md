@@ -17,9 +17,14 @@ Open http://localhost:3000. The practice screen works without an API key; AI dra
 
 - Practice a sample biology question, reveal a worked explanation, and track a simple session score.
 - After answering, see curated suggested reading references for the concept, including the relevant Campbell Biology chapter/subjects and a free OpenStax Biology 2e section.
+- Set an opt-in daily study reminder with browser notifications; the reminder time and preference are stored in the browser.
 - Draft an original question with the OpenAI Chat Completions API.
 - Keep generated content in an unreviewed draft state with source notes and reviewer fields to complete.
-- Drafts currently live only in browser memory and disappear on refresh. No authentication or database is included yet.
+- Drafts and reminder preferences are stored locally in the browser. No authentication or database is included yet.
+
+## Study reminders
+
+Use the **Remind me to study** control in the lower-right corner to choose a daily reminder time and grant browser notification permission. In this MVP, the app must remain open in a browser tab for the scheduled reminder to fire; browser notification support and permission are required. The schedule is local to the device/browser and is not synced. Reliable reminders while the app is closed will require a service worker, push subscription, and server-side push delivery.
 
 ## Study references
 
